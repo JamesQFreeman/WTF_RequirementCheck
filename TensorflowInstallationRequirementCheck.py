@@ -50,7 +50,7 @@ def check_gpu():
 def check_cuda_version():
     '''This function use the cusparse dll to check whether the cuda is successfully installed
     '''
-    check_list = ['cusparse64'+ x+ '.dll' for x in CUDA_VERSION]
+    check_list = ['cusparse64_'+ x+ '.dll' for x in CUDA_VERSION]
     if any(map(_check_file_existense_in_path, check_list)):
         return True
     else:
@@ -61,7 +61,7 @@ def check_cuda_version():
 def check_cudnn():
     '''This function use the cudnn dll to check whether the cudnn is successfully installed
     '''
-    check_list = ['cudnn64'+ x+ '.dll' for x in CUDNN_VERSION]
+    check_list = ['cudnn64_'+ x+ '.dll' for x in CUDNN_VERSION]
     if any(map(_check_file_existense_in_path, check_list)):
         return True
     else:
@@ -81,7 +81,10 @@ def check_scipy():
 def check_mkl():
     '''This function is unfinished
     '''
-    return True
+    if _check_file_existense_in_path('\\Lib\\site-packages\\numpy\\core\\mkl_core.dll'):
+        return True
+    else:
+        _missing_error_handler('mkl', [])
 
 def get_system_path():
     '''This function returns a system PATH in list form
